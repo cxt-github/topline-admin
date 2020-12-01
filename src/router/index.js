@@ -1,14 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+//导入其他页面
+import Login from '../views/login'
+import Home from '../views/home'
+
 Vue.use(VueRouter)
 
-// const routes = [
-//   {
-//     path: '/',
-//     name: 'Home',
-//     component: Home
-//   },
+const routes = [
+  { path: '/', redirect: '/login' },//重定向
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: Home
+  },
 //   {
 //     path: '/about',
 //     name: 'About',
@@ -17,7 +27,7 @@ Vue.use(VueRouter)
 //     // which is lazy-loaded when the route is visited.
 //     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
 //   }
-// ]
+]
 
 const router = new VueRouter({
   routes
