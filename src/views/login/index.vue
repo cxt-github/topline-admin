@@ -35,7 +35,7 @@
           <el-form-item prop="agree">
             <el-checkbox v-model="ruleForm.agree">
             </el-checkbox>
-            <span>我已阅读并同意<a>用户协议</a>和<a>隐私条款</a></span>
+            <span class="agree">我已阅读并同意<a>用户协议</a>和<a>隐私条款</a></span>
           </el-form-item>
           <el-form-item>
             <el-button
@@ -159,6 +159,14 @@ export default {
 
     .login-form {
       padding: 25px 40px 0;
+      
+      .agree{
+        margin-left: 2.5%;
+
+        a {
+          color: #32a3fb;;
+        }
+      }
     }
   }
 }
