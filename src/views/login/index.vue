@@ -45,8 +45,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        mobile: "18801185985",
-        proof: "246810",
+        mobile: "",
+        proof: "",
       },
       rules: {
         mobile: [
