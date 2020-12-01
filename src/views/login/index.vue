@@ -26,12 +26,19 @@
                 ></el-input>
               </el-col>
               <el-col :span="10" :offset="2">
-                <el-button :disabled="sec != 60" @click="getCode">{{sec == '60'?'发送验证码':"还有"+ sec + "秒"}}</el-button>
+                <el-button :disabled="sec != 60" @click="getCode">{{
+                  sec == "60" ? "发送验证码" : "还有" + sec + "秒"
+                }}</el-button>
               </el-col>
             </el-row>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" style="width:100%">登录</el-button>
+            <el-button
+              type="primary"
+              style="width:100%"
+              @click="doLogin('ruleForm')"
+              >登录</el-button
+            >
           </el-form-item>
         </el-form>
       </div>
@@ -45,7 +52,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        mobile: "",
+        mobile: "18801185985", //18801185985
         proof: "",
       },
       rules: {
@@ -59,35 +66,63 @@ export default {
         ],
       },
       // 获取验证码的倒计时，默认为60
-      sec: 60
+      sec: 60,
     };
   },
 
-  methods:{
+  methods: {
     //发送验证码点击事件
-    getCode(){
+    getCode() {
       //判断是否有手机号码才开始计时
-        if(this.ruleForm.mobile == ''){
-          this.$message.error('请输入手机号码，(●ˇ∀ˇ●)');
-          return;
-        }
+      if (this.ruleForm.mobile == "") {
+        this.$message.error("请输入手机号码，(●ˇ∀ˇ●)");
+        return;
+      }
       this.sec--;
       //计算器
-      let timerID = setInterval(()=>{
-        this.sec--
+      let timerID = setInterval(() => {
+        this.sec--;
 
-        if(this.sec == "56"){
-          this.ruleForm.proof = 246810
+        if (this.sec == "56") {
+          this.ruleForm.proof = "246810";
         }
 
         //当计时到0就停止计时，并回到60秒
-        if(this.sec == 0){
-          clearInterval(timerID)
-          this.sec = 60
+        if (this.sec == 0) {
+          clearInterval(timerID);
+          this.sec = 60;
         }
-      },1000)
-    }
-  }
+      }, 1000);
+    },
+
+    //点击登录事件
+    doLogin(formName) {
+      // 找到这个表单并调用validate方法（此方法是验证这个表单内所有元素是否全部通过规则）
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          //能来到这里就代表规则全部通过，此时发请求才比较合理
+          //发请求给服务器，让服务器判断账号密码是否正确
+          const res = await this.$axios.post('/mp/v1_0/authorizations',{
+            mobile: this.ruleForm.mobile,
+            code: this.ruleForm.proof
+          })
+          if(res.data.data){
+            this.$message({
+            showClose: true,
+            message: "登录成功！",
+            type: "success",
+          });
+          //跳转home页面
+          this.$router.push('/home')
+          }
+          
+        } else {
+          console.log("登录失败!!");
+          return false;
+        }
+      });
+    },
+  },
 };
 </script>
 

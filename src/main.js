@@ -7,6 +7,13 @@ import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
+//导入axios
+import axios from 'axios'
+// 把$axios属性设置给Vue原型
+Vue.prototype.$axios = axios
+// 设置基地址
+axios.defaults.baseURL = "http://ttapi.research.itcast.cn"
+
 //导入全局默认样式
 import './assets/css/base.css'
 
