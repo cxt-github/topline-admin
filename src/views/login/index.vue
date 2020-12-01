@@ -26,7 +26,7 @@
                 ></el-input>
               </el-col>
               <el-col :span="10" :offset="2">
-                <el-button>发送验证码</el-button>
+                <el-button :disabled="sec != 60" @click="getCode">{{sec == '60'?'发送验证码':"还有"+ sec + "秒"}}</el-button>
               </el-col>
             </el-row>
           </el-form-item>
@@ -58,8 +58,36 @@ export default {
           { min: 6, max: 6, message: "验证码有误", trigger: "blur" },
         ],
       },
+      // 获取验证码的倒计时，默认为60
+      sec: 60
     };
   },
+
+  methods:{
+    //发送验证码点击事件
+    getCode(){
+      //判断是否有手机号码才开始计时
+        if(this.ruleForm.mobile == ''){
+          this.$message.error('请输入手机号码，(●ˇ∀ˇ●)');
+          return;
+        }
+      this.sec--;
+      //计算器
+      let timerID = setInterval(()=>{
+        this.sec--
+
+        if(this.sec == "56"){
+          this.ruleForm.proof = 246810
+        }
+
+        //当计时到0就停止计时，并回到60秒
+        if(this.sec == 0){
+          clearInterval(timerID)
+          this.sec = 60
+        }
+      },1000)
+    }
+  }
 };
 </script>
 
