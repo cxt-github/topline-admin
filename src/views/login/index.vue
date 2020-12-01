@@ -32,6 +32,11 @@
               </el-col>
             </el-row>
           </el-form-item>
+          <el-form-item prop="agree">
+            <el-checkbox v-model="ruleForm.agree">
+            </el-checkbox>
+            <span>我已阅读并同意<a>用户协议</a>和<a>隐私条款</a></span>
+          </el-form-item>
           <el-form-item>
             <el-button
               type="primary"
@@ -53,7 +58,8 @@ export default {
     return {
       ruleForm: {
         mobile: "18801185985", //18801185985
-        proof: "",
+        proof: "246810",
+        agree: true,
       },
       rules: {
         mobile: [
@@ -64,6 +70,9 @@ export default {
           { required: true, message: "请输入验证码", trigger: "blur" },
           { min: 6, max: 6, message: "验证码有误", trigger: "blur" },
         ],
+        agree:[
+          {pattern:/true/,message:'请勾选同意', trigger: "change"}
+        ]
       },
       // 获取验证码的倒计时，默认为60
       sec: 60,
