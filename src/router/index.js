@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
     var res = getToken()
     //判断是否有token
     if (res) {
-      //有就放行
+      //有，放行
       next()
     } else {
       //提示
