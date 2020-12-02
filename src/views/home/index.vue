@@ -66,7 +66,7 @@
             </el-col>
             <span>消息</span>
             <el-col :span="6">
-              <el-dropdown trigger="click" class="my-dropdown">
+              <el-dropdown trigger="click" class="my-dropdown" @command="doCmd">
                 <span class="el-dropdown-link my-dropdown-right">
                   <img :src="userInfo.photo" alt />
                   <span class="username">{{userInfo.name}}</span>
@@ -76,7 +76,7 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="info">个人信息</el-dropdown-item>
                   <el-dropdown-item command="git">git地址</el-dropdown-item>
-                  <el-dropdown-item command="logout">退出</el-dropdown-item>
+                  <el-dropdown-item command="logout" @click="dropOut">退出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -91,7 +91,7 @@
 
 <script>
 //导入token
-import { getToken } from '../../utils/token'
+import { getToken,removeToken } from '../../utils/token'
 export default {
   name: 'index',
   data() {
@@ -102,6 +102,19 @@ export default {
       }
     }
   },
+
+  methods:{
+    doCmd(cmd){
+      //判断是否退出
+      if(cmd === "logout") {
+        //删除token
+        removeToken()
+        //退回登录页面
+        this.$router.push('/login')
+      }
+    }
+  },
+
   created(){
     let res = JSON.parse(getToken())
     // console.log(res);
