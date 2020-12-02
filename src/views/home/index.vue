@@ -14,10 +14,13 @@
           class="el-menu-vertical-demo"
           background-color="#353B4E"
           text-color="#ADB9AB"
+          :unique-opened="true"
+          active-text-color="#ffd04b"
         >
           <el-menu-item index="1">
             <span slot="title">首页</span>
           </el-menu-item>
+
           <el-submenu index="2">
             <template slot="title">
               <span>内容管理</span>
@@ -29,6 +32,7 @@
               <el-menu-item index="2-4">素材管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+
           <el-submenu index="3">
             <template slot="title">
               <span>粉丝管理</span>
@@ -40,6 +44,7 @@
               <el-menu-item index="3-4">粉丝列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
+
           <el-menu-item index="4">
             <span slot="title">账号信息</span>
           </el-menu-item>

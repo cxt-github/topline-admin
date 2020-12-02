@@ -8,6 +8,11 @@ import Home from '../views/home'
 //导入token
 import { getToken } from '../utils/token'
 
+//导入NProgress
+import NProgress from 'nprogress'
+import "nprogress/nprogress.css"
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -40,6 +45,7 @@ const router = new VueRouter({
 // from：从哪来
 // next：放行的方法，只有调用这个方法，才让你去接下来的地方
 router.beforeEach((to, from, next) => {
+  NProgress.start() //加载动画开始
   // 如果你去的路径不是登录页
   if (to.path != '/login') {
     var res = getToken()
@@ -57,6 +63,15 @@ router.beforeEach((to, from, next) => {
     //如果你去的是登录页面，直接放行
     next()
   }
+})
+
+//全局后置钩子
+router.afterEach((to, from) => {
+  // ...
+  setTimeout(()=>{
+    NProgress.done() //加载动画结束
+  },200)
+  
 })
 
 export default router
