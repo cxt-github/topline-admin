@@ -45,24 +45,26 @@ const router = new VueRouter({
 // from：从哪来
 // next：放行的方法，只有调用这个方法，才让你去接下来的地方
 router.beforeEach((to, from, next) => {
-  NProgress.start() //加载动画开始
+  //进度条动画开始
+  NProgress.start() 
+  next()
   // 如果你去的路径不是登录页
-  if (to.path != '/login') {
-    var res = getToken()
-    //判断是否有token
-    if (res) {
-      //有，放行
-      next()
-    } else {
-      //提示
-      Vue.prototype.$message.error('请先登录')
-      //没登录，打回登录页
-      next('/login')
-    }
-  } else {
-    //如果你去的是登录页面，直接放行
-    next()
-  }
+  // if (to.path != '/login') {
+  //   var res = getToken()
+  //   //判断是否有token
+  //   if (res) {
+  //     //有，放行
+  //     next()
+  //   } else {
+  //     //提示
+  //     Vue.prototype.$message.error('请先登录')
+  //     //没登录，打回登录页
+  //     next('/login')
+  //   }
+  // } else {
+  //   //如果你去的是登录页面，直接放行
+  //   next()
+  // }
 })
 
 //全局后置钩子

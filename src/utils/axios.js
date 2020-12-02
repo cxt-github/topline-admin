@@ -1,6 +1,8 @@
 import Vue from 'vue'
 //导入axios
 import axios from 'axios'
+//导入router
+import router from '../router'
 //导入本地token
 import { getToken } from './token'
 // 把$axios属性设置给Vue原型
@@ -28,6 +30,11 @@ axios.interceptors.response.use( (response) => {
     // 对响应数据做点什么
     return response;
   },  (error) => {
+    //提示请先登录
+    Vue.prototype.$message.error('请先登录')
+
+    //打回登录页
+    router.push('/login')
     // 对响应错误做点什么
     return Promise.reject(error);
   });
