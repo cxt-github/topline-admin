@@ -76,7 +76,7 @@
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="info">个人信息</el-dropdown-item>
                   <el-dropdown-item command="git">git地址</el-dropdown-item>
-                  <el-dropdown-item command="logout" @click="dropOut">退出</el-dropdown-item>
+                  <el-dropdown-item command="logout">退出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
