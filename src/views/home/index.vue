@@ -68,8 +68,8 @@
             <el-col :span="6">
               <el-dropdown trigger="click" class="my-dropdown">
                 <span class="el-dropdown-link my-dropdown-right">
-                  <img src="../../../../000.jpg" alt />
-                  <span class="username">嘻嘻嘻</span>
+                  <img :src="userInfo.photo" alt />
+                  <span class="username">{{userInfo.name}}</span>
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
 
@@ -90,7 +90,25 @@
 </template>
 
 <script>
-export default {};
+//导入token
+import { getToken } from '../../utils/token'
+export default {
+  name: 'index',
+  data() {
+    return {
+      userInfo: {
+        name: "",
+        photo: "",
+      }
+    }
+  },
+  created(){
+    let res = JSON.parse(getToken())
+    // console.log(res);
+    this.userInfo.name = res.name
+    this.userInfo.photo =res.photo
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -119,7 +137,6 @@ export default {};
 
   .my-main {
     padding: 0;
-    
 
     .my-main-header {
       background-color: pink;
@@ -130,17 +147,15 @@ export default {};
           display: flex;
           justify-content: flex-end;
 
-          span{
+          span {
             margin-left: 15px;
           }
 
           .my-dropdown-right {
-            
-
-            img{
+            img {
               width: 35px;
               height: 35px;
-              
+
               vertical-align: middle;
             }
           }

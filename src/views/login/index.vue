@@ -33,9 +33,10 @@
             </el-row>
           </el-form-item>
           <el-form-item prop="agree">
-            <el-checkbox v-model="ruleForm.agree">
-            </el-checkbox>
-            <span class="agree">我已阅读并同意<a>用户协议</a>和<a>隐私条款</a></span>
+            <el-checkbox v-model="ruleForm.agree"> </el-checkbox>
+            <span class="agree"
+              >我已阅读并同意<a>用户协议</a>和<a>隐私条款</a></span
+            >
           </el-form-item>
           <el-form-item>
             <el-button
@@ -52,12 +53,14 @@
 </template>
 
 <script>
+//导入token
+import { setToken } from "../../utils/token";
 export default {
   name: "login",
   data() {
     return {
       ruleForm: {
-        mobile: "18801185985", //18801185985
+        mobile: "18801185984",
         proof: "246810",
         agree: true,
       },
@@ -70,9 +73,7 @@ export default {
           { required: true, message: "请输入验证码", trigger: "blur" },
           { min: 6, max: 6, message: "验证码有误", trigger: "blur" },
         ],
-        agree:[
-          {pattern:/true/,message:'请勾选同意', trigger: "change"}
-        ]
+        agree: [{ pattern: /true/, message: "请勾选同意", trigger: "change" }],
       },
       // 获取验证码的倒计时，默认为60
       sec: 60,
@@ -111,20 +112,24 @@ export default {
         if (valid) {
           //能来到这里就代表规则全部通过，此时发请求才比较合理
           //发请求给服务器，让服务器判断账号密码是否正确
-          const res = await this.$axios.post('/mp/v1_0/authorizations',{
+          const res = await this.$axios.post("/mp/v1_0/authorizations", {
             mobile: this.ruleForm.mobile,
-            code: this.ruleForm.proof
-          })
-          if(res.data.data){
-            this.$message({
-            showClose: true,
-            message: "登录成功！",
-            type: "success",
+            code: this.ruleForm.proof,
           });
-          //跳转home页面
-          this.$router.push('/home')
+          if (res.data.data) {
+            //获取到的数据保存到本地
+            //先把对象转成json字符串
+            let token = JSON.stringify(res.data.data);
+            setToken(token);
+
+            this.$message({
+              showClose: true,
+              message: "登录成功！",
+              type: "success",
+            });
+            //跳转home页面
+            this.$router.push('/home')
           }
-          
         } else {
           console.log("登录失败!!");
           return false;
@@ -159,12 +164,12 @@ export default {
 
     .login-form {
       padding: 25px 40px 0;
-      
-      .agree{
+
+      .agree {
         margin-left: 2.5%;
 
         a {
-          color: #32a3fb;;
+          color: #32a3fb;
         }
       }
     }
