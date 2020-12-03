@@ -13,7 +13,7 @@ axios.defaults.baseURL = "http://ttapi.research.itcast.cn"
 // 添加请求拦截器
 axios.interceptors.request.use( (config) => {
     // 在发送请求之前做些什么
-    console.log(config);
+    // console.log(config);
     let user = JSON.parse(getToken())
     // 有值才添加token
     if(user){

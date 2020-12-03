@@ -7,21 +7,23 @@
       <el-form ref="form" label-width="80px" :model="searchParams">
         <el-form-item label="文章状态">
           <el-radio-group v-model="searchParams.status">
-            <el-radio :label="1">全部</el-radio>
-            <el-radio :label="2">草稿</el-radio>
-            <el-radio :label="3">待审核</el-radio>
-            <el-radio :label="4">审核通过</el-radio>
-            <el-radio :label="5">审核失败</el-radio>
+            <el-radio label="">全部</el-radio>
+            <el-radio :label="0">草稿</el-radio>
+            <el-radio :label="1">待审核</el-radio>
+            <el-radio :label="3">审核通过</el-radio>
+            <el-radio :label="4">审核失败</el-radio>
           </el-radio-group>
         </el-form-item>
+
+        <!-- 封装的频道组件 -->
         <el-form-item label="频道列表">
-          <el-select placeholder="请选择" v-model="searchParams.channel_id">
-            <el-option label="所有频道" value=""></el-option>
-            <el-option label="区域二" value="two"></el-option>
-          </el-select>
+          <ttchannel></ttchannel>
         </el-form-item>
+
+
         <el-form-item label="时间选择">
           <el-date-picker
+            value-format="yyyy-MM-dd"
             v-model="searchParams.date"
             type="daterange"
             range-separator="至"
@@ -30,6 +32,7 @@
           >
           </el-date-picker>
         </el-form-item>
+        <el-button type="primary" @click="doSearch">筛选</el-button>
       </el-form>
     </div>
     <p>
@@ -70,12 +73,18 @@
 </template>
 
 <script>
+//导入封装的频道组件
+import ttchannel from '../../../components/ttchannel'
+
 export default {
   name: "articles",
+  components:{
+    ttchannel
+  },
   data() {
     return {
       searchParams: {
-        status: 1,
+        status: "",
         channel_id: "",
         date: "",
       },
@@ -90,8 +99,18 @@ export default {
     async loadTableData(page) {
       //加载动画
       this.loading = true
+
+      const status = this.searchParams.status === ''? undefined : this.searchParams.status
+      const channel_id = this.searchParams.channel_id === ''? undefined : this.searchParams.channel_id
+      const begin_pubdate = this.searchParams.date === null? undefined : this.searchParams.date[0]
+      const end_pubdate = this.searchParams.date === null? undefined : this.searchParams.date[1]
+
       const res = await this.$axios.get("/mp/v1_0/articles",{
           params:{
+              status,
+              channel_id,
+              begin_pubdate,
+              end_pubdate,
               page:page
           }
       });
@@ -105,12 +124,19 @@ export default {
     //页面点击事件
     handleCurrentChange(page) {
         this.loadTableData(page)
+    },
+
+    //筛选点击事件
+    doSearch(){
+      this.loadTableData(1)
     }
   },
 
   created() {
       //获取表格数据的方法
       this.loadTableData(1)
+
+      //获取频道列表数据
   },
 
   //过滤器
