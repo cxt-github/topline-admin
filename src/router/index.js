@@ -37,6 +37,11 @@ const routes = [
         path: '/publish',
         component: Publish
       },
+      {
+        path: '/publish/:id',
+        name: 'publish-edit',
+        component: Publish
+      },
     ]
   },
 

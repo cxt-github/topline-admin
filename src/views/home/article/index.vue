@@ -17,7 +17,8 @@
 
         <!-- 封装的频道组件 -->
         <el-form-item label="频道列表">
-          <ttchannel></ttchannel>
+          <!-- <ttchannel :channel_id="searchParams.channel_id" @change="searchParams.channel_id = $event"></ttchannel> -->
+          <ttchannel v-model="searchParams.channel_id"></ttchannel>
         </el-form-item>
 
         <el-form-item label="时间选择">
@@ -53,7 +54,7 @@
       <el-table-column prop="pubdate" label="发布时间"> </el-table-column>
       <el-table-column prop="address" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small">修改</el-button>
+          <el-button type="primary" size="small" @click="doEdit(scope.row)">修改</el-button>
           <el-button type="danger" size="small" @click="doDel(scope.row)"
             >删除</el-button
           >
@@ -160,6 +161,11 @@ export default {
           });
         });
     },
+
+    //点击修改事件
+    doEdit(row) {
+      this.$router.push(`/publish/${row.id}`)
+    }
   },
 
   created() {
