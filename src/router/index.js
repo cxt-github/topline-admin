@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Login from '../views/login'
 import Home from '../views/home'
 import Article from '../views/home/article'
+import Publish from '../views/home/publish'
 
 //导入token
 import { getToken } from '../utils/token'
@@ -31,7 +32,11 @@ const routes = [
       {
         path: '/article',
         component: Article
-      }
+      },
+      {
+        path: '/publish',
+        component: Publish
+      },
     ]
   },
 
