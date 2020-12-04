@@ -6,6 +6,7 @@ import Login from '../views/login'
 import Home from '../views/home'
 import Article from '../views/home/article'
 import Publish from '../views/home/publish'
+import Comment from '../views/home/comment'
 
 //导入token
 import { getToken } from '../utils/token'
@@ -41,6 +42,11 @@ const routes = [
         path: '/publish/:id',
         name: 'publish-edit',
         component: Publish
+      },
+      {
+        path: '/comment',
+        name: 'comment',
+        component: Comment
       },
     ]
   },

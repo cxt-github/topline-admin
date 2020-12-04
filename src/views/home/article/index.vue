@@ -54,7 +54,9 @@
       <el-table-column prop="pubdate" label="发布时间"> </el-table-column>
       <el-table-column prop="address" label="操作">
         <template slot-scope="scope">
-          <el-button type="primary" size="small" @click="doEdit(scope.row)">修改</el-button>
+          <el-button type="primary" size="small" @click="doEdit(scope.row)"
+            >修改</el-button
+          >
           <el-button type="danger" size="small" @click="doDel(scope.row)"
             >删除</el-button
           >
@@ -148,11 +150,18 @@ export default {
         type: "warning",
       })
         .then(() => {
-          // this.$axios.delete(`/mp/v1_0/articles/${row.id}`)，发送请求误，删除不了
-          this.$message({
-            type: "warning",
-            message: "删除失败!",
-          });
+          this.$axios.delete(`/mp/v1_0/articles/${row.id}`).then((res) => {
+            //接口有误，删除不了
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+          }).catch(error => {
+            if(error.response.status == 400){
+              this.$message.warning('删除失败!')
+          }
+          })
+          
         })
         .catch(() => {
           this.$message({
@@ -164,8 +173,8 @@ export default {
 
     //点击修改事件
     doEdit(row) {
-      this.$router.push(`/publish/${row.id}`)
-    }
+      this.$router.push(`/publish/${row.id}`);
+    },
   },
 
   created() {

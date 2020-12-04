@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       ruleForm: {
-        mobile: "18801185985",
+        mobile: "13911111111",
         proof: "246810",
         agree: true,
       },
