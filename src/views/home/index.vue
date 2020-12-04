@@ -47,7 +47,7 @@
             </el-menu-item-group>
           </el-submenu>
 
-          <el-menu-item index="4">
+          <el-menu-item index="/user">
             <span slot="title">账号信息</span>
           </el-menu-item>
         </el-menu>
@@ -75,8 +75,8 @@
             <el-col :span="7">
               <el-dropdown trigger="click" class="my-dropdown" @command="doCmd">
                 <span class="el-dropdown-link my-dropdown-right">
-                  <img :src="userInfo.photo" alt />
-                  <span class="username">{{userInfo.name}}</span>
+                  <img :src="$store.state.userInfo.photo" alt />
+                  <span class="username">{{$store.state.userInfo.name}}</span>
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
 
