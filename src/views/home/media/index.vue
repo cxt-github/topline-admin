@@ -135,7 +135,7 @@ export default {
     },
 
     //图片上传成功的函数
-    onSuccess(response, file, fileList) {
+    onSuccess(response) {
       this.loadData();
     },
   },
