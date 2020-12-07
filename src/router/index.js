@@ -9,6 +9,7 @@ import Publish from '../views/home/publish'
 import Comment from '../views/home/comment'
 import User from '../views/home/user'
 import Overview from '../views/home/overview'
+import Media from '../views/home/media'
 
 //导入token
 import { getToken } from '../utils/token'
@@ -59,6 +60,11 @@ const routes = [
         path: '/overview',
         name: 'overview',
         component: Overview
+      },
+      {
+        path: '/media',
+        name: 'media',
+        component: Media
       },
     ]
   },

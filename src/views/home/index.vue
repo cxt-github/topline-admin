@@ -31,7 +31,7 @@
               <el-menu-item index="/publish">发布文章</el-menu-item>
               <el-menu-item index="/article">内容列表</el-menu-item>
               <el-menu-item index="/comment">评论列表</el-menu-item>
-              <el-menu-item index="2-4">素材管理</el-menu-item>
+              <el-menu-item index="/media">素材管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
 
@@ -109,7 +109,7 @@ export default {
       userInfo: {
         name: "",
         photo: "",
-      }
+      },
     }
   },
 
@@ -122,14 +122,20 @@ export default {
         //退回登录页面
         this.$router.push('/login')
       }
-    }
+    },
+
+    //封装获取用户信息
+    userData() {
+      this.$axios.get("/mp/v1_0/user/profile").then((res) => {
+        this.userInfo = res.data.data;
+        this.$store.commit('changeUserInfo',this.userInfo)
+      });
+    },
   },
 
   created(){
-    let res = JSON.parse(getToken())
-    // console.log(res);
-    this.userInfo.name = res.name
-    this.userInfo.photo =res.photo
+    //获取用户信息
+    this.userData()
   }
 };
 </script>

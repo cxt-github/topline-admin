@@ -105,6 +105,7 @@ export default {
       fd.append('photo',data.file)
       this.$axios.patch('/mp/v1_0/user/photo',fd)
       .then(res=>{
+        console.log(res);
         // this.userInfo.photo = res.data.data.photo
         // 修改后的数据要给vuex更新
         this.$store.commit('changeUserInfo',this.userInfo)
